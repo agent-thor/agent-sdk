@@ -1,0 +1,67 @@
+{
+    "name": "agent",
+    "clients": [],
+    "modelProvider": "",
+    "settings": {
+        "secrets": {},
+        "voice": {
+            "model": "en_US-male-medium"
+        }
+    },
+    "plugins": [
+        ""
+    ],
+    "bio": [],
+    "lore": [],
+    "knowledge": [],
+    "messageExamples": [
+        [
+            {
+                "user": "",
+                "content": {
+                    "text": ""
+                }
+            },
+            {
+                "user": "",
+                "content": {
+                    "text": ""
+                }
+            }
+        ],
+        [
+            {
+                "user": "",
+                "content": {
+                    "text": ""
+                }
+            },
+            {
+                "user": "",
+                "content": {
+                    "text": ""
+                }
+            }
+        ]
+    ],
+    "postExamples": [
+        ""
+    ],
+    "topics": [
+        ""
+    ],
+    "style": {
+        "all": [
+            ""
+        ],
+        "chat": [
+            ""
+        ],
+        "post": [
+            ""
+        ]
+    },
+    "adjectives": [
+        ""
+    ]
+}

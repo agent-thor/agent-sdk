@@ -77,7 +77,7 @@ class InitializeAgent:
         
         return multi_agent_list_name
     
-    def send_query(self, query):
+    def send_query(self, query, agent_id):
         """
         Send a query to the Eliza API and return the response.
     
@@ -85,12 +85,13 @@ class InitializeAgent:
         :return: The API response as a dictionary.
         """
         # Get the full URL from the config file
-        url = os.getenv("SERVER_API") + self.agent_id + '/message'
+        url = os.getenv("API_QUERY_ADD")
+        
         
         # Prepare the payload
         payload = {
             "text": query,
-            "user": "user"
+            "agent_id" : agent_id
         }
         headers = {"Content-Type": "application/json"}
                 
@@ -120,7 +121,7 @@ class InitializeAgent:
         multiple_agents_name = self.get_agents_name()
         
 
-        session_address = os.getenv("API_CREATE")
+        session_address = os.getenv("API_CREATE_ADD")
         payload = {
             "character_file": character_file,
             "api_key": self.API_KEY,
@@ -133,21 +134,23 @@ class InitializeAgent:
         headers = {"Content-Type": "application/json"}
 
         response = requests.post(session_address, data=json.dumps(payload), headers=headers)
-        agent_id = response.json()['id']
-        self.agent_id = agent_id
-    
 
         if response.status_code == 201:
-            print("Session created successfully!")
+            agent_id = response.json()['id']
+            print(f"\033[92mAgent_created with id: {agent_id}\033[0m")
             response_data = response.json()
             self.session_id = response_data.get("session_id")  # Store the session_id
-            print(response_data)
-        elif response.status_code == 409:
-            print("Error: Previous session is not closed.")
-            print(response.json())
+            
+            return agent_id
+        
+        elif response.status_code == 403:
+            return response.json()
+
         else:
-            print("An error occurred.")
+            print("An error occurred while creating agent.")
             print(response.json())
+            
+            return None
 
     def close(self):
         """
@@ -157,7 +160,7 @@ class InitializeAgent:
             character_file = self.generate_character_file()
             env_file = self.generate_env_file()
 
-            session_address = os.getenv("API_CREATE")
+            session_address = os.getenv("API_CREATE_ADD")
             payload = {
                 "character_file": character_file,
                 "env_file": env_file,

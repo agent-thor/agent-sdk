@@ -1,5 +1,6 @@
 from core.agent import Agent
 from core.core import InitializeAgent
+from core.info import AgentInfo
 from models.agent_model import Model
 
 print("Import done")
@@ -7,7 +8,7 @@ print("Import done")
 ai_model = Model(model = "openai", 
                   OPENAI_API_KEY= '', 
                   bio = [
-                      "You are a market ethusisatic who fetches price",
+                      "You intrepret webs earch results",
                       ""
                       ],
                   lore = [
@@ -39,7 +40,15 @@ web_search_agent = Agent(name = "websearch",
 
 
 multi_agent = InitializeAgent(agents = [web_search_agent], API_KEY= "", multi_agent_name = "web_search")
-multi_agent.start()
+agent_id = multi_agent.start()
+
+
+# agent_info = AgentInfo(api_key="595f999b-4326-4326-a780-1a2d0097bda2")
+# agent_info.get_agent_info("1")
+
+# output = multi_agent.send_query("what is your name")
+
+
 # multi_agent.close()
 
 # multi_agent.agent_id
@@ -56,4 +65,10 @@ coinmarketcap
 
 """
 binance
+"""
+
+
+"""
+The idea of query is that whenever you create agent, it will return a multi-agent_id which comes frome eliza and inbuilt functions.
+
 """

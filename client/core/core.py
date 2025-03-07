@@ -76,38 +76,6 @@ class InitializeAgent:
         multi_agent_list_name = ''.join([agent.name + '/' for agent in self.agents])
         
         return multi_agent_list_name
-    
-    def send_query(self, query, agent_id):
-        """
-        Send a query to the Eliza API and return the response.
-    
-        :param query: The query text to send.
-        :return: The API response as a dictionary.
-        """
-        # Get the full URL from the config file
-        url = os.getenv("API_QUERY_ADD")
-        
-        
-        # Prepare the payload
-        payload = {
-            "text": query,
-            "agent_id" : agent_id
-        }
-        headers = {"Content-Type": "application/json"}
-                
-        try:
-            response = requests.post(url, json=payload, headers=headers)
-            response.raise_for_status()  # Raise an exception for HTTP errors
-            output = self.get_parsed_response(response.json())
-                        
-            return output # Return the JSON response directly
-        except requests.exceptions.RequestException as e:
-            # Handle request-related errors (e.g., network issues, invalid responses)
-            return {"error": "Failed to send query.", "details": str(e)}
-        except ValueError as e:
-            # Handle JSON decoding errors
-            return {"error": "Invalid response from the server.", "details": str(e)}
-                
 
     def start(self):
         """
@@ -136,12 +104,12 @@ class InitializeAgent:
         response = requests.post(session_address, data=json.dumps(payload), headers=headers)
 
         if response.status_code == 201:
-            agent_id = response.json()['id']
-            print(f"\033[92mAgent_created with id: {agent_id}\033[0m")
+            agent_name = response.json()['multi_agent_name']
+            print(f"\033[92mAgent_created with name: {agent_name}\033[0m")
             response_data = response.json()
             self.session_id = response_data.get("session_id")  # Store the session_id
             
-            return agent_id
+            return agent_name
         
         elif response.status_code == 403:
             return response.json()

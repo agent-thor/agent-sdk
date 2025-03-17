@@ -32,7 +32,7 @@ class IntitializeConversation:
                 
         return text, content
 
-    def send_query(self, query):
+    def send_query(self, query, function_name = None):
         """
         Send a query to the Eliza API and return the response.
     
@@ -46,7 +46,8 @@ class IntitializeConversation:
         # Prepare the payload
         payload = {
             "query": query,
-            "agent_name" : self.agent_name
+            "agent_name" : self.agent_name,
+            "function_name": function_name
         }
         headers = {"Content-Type": "application/json"}
                 

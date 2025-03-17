@@ -1,24 +1,25 @@
-import json
+from dotenv import load_dotenv
+import os
 from core.agent import Agent
 from core.core import InitializeAgent
 from core.info import AgentInfo
 from models.agent_model import Model
+from core.conversation import IntitializeConversation
+
+# Load environment variables from .env file
+load_dotenv()
 
 print("Import done")
 
-# Load keys from json file
-with open('keys.json') as f:
-    keys = json.load(f)
-
 ai_model = Model(model="openai", 
-                OPENAI_API_KEY=keys['openai']['api_key'],
+                OPENAI_API_KEY=os.getenv('OPENAI_API_KEY'),
                 bio=["You intrepret webs earch results", ""],
                 lore=["", ""]
                 )
 
 web_search_agent = Agent(name="websearch", 
                         agent_name='plugin-web-search',
-                        TAVILY_API_KEY=keys['tavily']['api_key'],
+                        TAVILY_API_KEY=os.getenv('TAVILY_API_KEY'),
                         model=ai_model
                         )
 
@@ -35,15 +36,28 @@ web_search_agent = Agent(name="websearch",
 #                           model = ai_model)
 
 telegram_agent = Agent(name="",
-                      telegram_api_id=keys['telegram']['api_id'],
-                      telegram_api_hash=keys['telegram']['api_hash']
+                      telegram_api_id=os.getenv('TELEGRAM_API_ID'),
+                      telegram_api_hash=os.getenv('TELEGRAM_API_HASH')
                       )
 
 multi_agent = InitializeAgent(agents=[web_search_agent], 
-                            API_KEY=keys['eliza']['api_key'], 
-                            multi_agent_name="web_search22")
+                            API_KEY=os.getenv('ELIZA_API_KEY'), 
+                            multi_agent_name="web_search4")
 agent_name = multi_agent.start()
-multi_agent.send_query(query, agent_id)
+
+#chatting with an agent
+conversation = IntitializeConversation("web_search4")
+result = conversation.send_query("what is the temperature in delhi?")
+
+"""
+
+while adding the send_query function, you can also add that if there is no specific agent named passed, then it goes to both
+and find the answer otherwise it goes to pre defined agent.
+
+"""
+
+
+# multi_agent.send_query(query, agent_id)
 
 
 # agent_info = AgentInfo(api_key="595f999b-4326-4326-a780-1a2d0097bda2")

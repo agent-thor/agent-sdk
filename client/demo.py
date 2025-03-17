@@ -64,28 +64,6 @@ def intialize_agent(ai_model, web_search_agent, coin_agent, binance_agent, teleg
     return conversation
 
 
-# def create_multi_agent_system(conversation):
-#     price_response = conversation.send_query("what is the price of BTC in USD")
-#     price = price_response['content']['price']
-#     print(f"current price is {price}")
-    
-#     if price > 100000:
-#         tel_message = f"price of BTC has reached {price}"
-#         telegram_cred = {
-#             "telegram_api_id": 23724256,
-#             "telegram_api_hash": "e9e6694fcaa2b502c2d2bbae922e4414"
-            
-#             }
-        
-#         send_telegram_message(tel_message, telegram_cred, "JoiN9911")
-        
-        
-#         web_search_response = conversation.send_query("What do you think about BTC prediction this week")
-#         openai_analysis = conversation.send_query(f"BTC has reached {price} and market research says me about {web_search_response['text']}. What do you think about this. give me answer in yes or no json format.")
-#         balance_response = conversation.send_query("show me my spot binance balance")
-#         # buy_response = conversation.send_query("Buy me one dot at market price")
-        
-
 def create_multi_agent_system(conversation):
     try:
         price_response = conversation.send_query("What is the price of BTC in USD")

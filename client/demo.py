@@ -102,7 +102,7 @@ if __name__ == "__main__":
     
     while True:
         create_multi_agent_system(conversation)
-        time.sleep(10)
+        time.sleep(9)
     
     
    

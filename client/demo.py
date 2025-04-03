@@ -89,7 +89,7 @@ def create_multi_agent_system(conversation):
 
             # balance_response = conversation.send_query("Show me my spot Binance balance")
             # print(f"Balance response: {balance_response}")
-            trade_response = conversation.send_query("buy me a 2 dot at market price")
+            trade_response = conversation.send_query("buy me a 2 dot at market price with quantity = 5 ")
         else:
             print("Error: Invalid price response format")
     except Exception as e:
@@ -105,6 +105,7 @@ if __name__ == "__main__":
         time.sleep(10)
     
     
+   
         
                 
     
